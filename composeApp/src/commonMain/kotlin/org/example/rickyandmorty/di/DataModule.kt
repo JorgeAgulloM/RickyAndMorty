@@ -30,5 +30,5 @@ val dataModule = module {
         }
     }
     factoryOf(::ApiService)
-    factoryOf(::RepositoryImpl)
+    factory<Repository> { RepositoryImpl(get()) }
 }
