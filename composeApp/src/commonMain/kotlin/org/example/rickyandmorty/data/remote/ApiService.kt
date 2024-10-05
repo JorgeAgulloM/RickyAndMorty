@@ -7,7 +7,7 @@ import org.example.rickyandmorty.data.remote.response.CharacterResponse
 
 class ApiService(private val client: HttpClient) {
 
-    suspend fun getSingleCharacter(id: Int): CharacterResponse {
+    suspend fun getSingleCharacter(id: String): CharacterResponse {
         return client.get("/api/character/$id").body()
     }
 
