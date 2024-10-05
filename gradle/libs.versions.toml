@@ -20,6 +20,7 @@ koinCompose = "1.1.5"
 koinComposeViewModel = "1.2.0-Beta4"
 activity = "1.9.2"
 ktor = "2.3.12"
+viewmodel = "2.8.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -49,6 +50,9 @@ ktor-client-negotiation = { group = "io.ktor", name = "ktor-client-content-negot
 ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 ktor-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+# ViewModel
+viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "viewmodel"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
