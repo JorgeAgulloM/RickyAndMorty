@@ -5,7 +5,7 @@ import org.example.rickyandmorty.domain.model.CharacterModel
 
 @Serializable
 data class CharacterResponse(
-    val id: String,
+    val id: Int,
     val status: String,
     val image: String
 ) {
