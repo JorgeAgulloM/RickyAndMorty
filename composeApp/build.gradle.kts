@@ -70,6 +70,9 @@ kotlin {
             // Paging3
             implementation(libs.paging.common)
             implementation(libs.paging.compose.common)
+
+            // Date
+            implementation(libs.kotlinx.datetime)
         }
         iosMain.dependencies {
             // Ktor
