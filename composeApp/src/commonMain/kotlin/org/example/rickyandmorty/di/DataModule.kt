@@ -10,6 +10,7 @@ import kotlinx.serialization.json.Json
 import org.example.rickyandmorty.data.RepositoryImpl
 import org.example.rickyandmorty.data.remote.ApiService
 import org.example.rickyandmorty.data.remote.paging.CharactersPagingSource
+import org.example.rickyandmorty.data.remote.paging.EpisodesPagingSource
 import org.example.rickyandmorty.domain.Repository
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -31,6 +32,7 @@ val dataModule = module {
         }
     }
     factoryOf(::ApiService)
-    factory<Repository> { RepositoryImpl(get(), get(), get()) }
+    factory<Repository> { RepositoryImpl(get(), get(), get(), get()) }
     factoryOf(::CharactersPagingSource)
+    factoryOf(::EpisodesPagingSource)
 }

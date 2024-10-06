@@ -1,7 +1,20 @@
 package org.example.rickyandmorty.ui.home.tabs.episodes
 
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
+import org.example.rickyandmorty.domain.Repository
 
-class EpisodesViewModel: ViewModel() {
+class EpisodesViewModel(private val repository: Repository) : ViewModel() {
+
+    private val _state = MutableStateFlow(EpisodesState())
+    val state: StateFlow<EpisodesState> = _state
+
+    init {
+        _state.update { state ->
+            state.copy(episodes = repository.getAllEpisodes())
+        }
+    }
 
 }
