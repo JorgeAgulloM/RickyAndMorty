@@ -2,6 +2,8 @@ package org.example.rickyandmorty.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import org.example.rickyandmorty.domain.model.CharacterModel
+import org.example.rickyandmorty.domain.model.CharacterOfTheDayModel
 
 @Entity
 data class CharacterOfTheDayEntity(
@@ -10,5 +12,10 @@ data class CharacterOfTheDayEntity(
     val isAlive: Boolean,
     val image: String,
     val name: String,
-    val selectedDay: String
-)
+    val selectedDate: String
+) {
+    fun toDomain(): CharacterOfTheDayModel = CharacterOfTheDayModel(
+        characterModel = CharacterModel(id, isAlive, image, name),
+        selectedDay = selectedDate
+    )
+}

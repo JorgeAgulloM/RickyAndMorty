@@ -9,6 +9,7 @@ import org.example.rickyandmorty.data.remote.ApiService
 import org.example.rickyandmorty.data.remote.paging.CharactersPagingSource
 import org.example.rickyandmorty.domain.Repository
 import org.example.rickyandmorty.domain.model.CharacterModel
+import org.example.rickyandmorty.domain.model.CharacterOfTheDayModel
 
 class RepositoryImpl(
     private val api: ApiService,
@@ -29,8 +30,12 @@ class RepositoryImpl(
         pagingSourceFactory = { charactersPagingSource }
     ).flow
 
-    override suspend fun getCharacterDB() {
-        database.getPreferenceDao().getCharacterOfTheDayDb()
+    override suspend fun getCharacterDB(): CharacterOfTheDayModel? {
+        return database.getPreferenceDao().getCharacterOfTheDayDb()?.toDomain()
+    }
+
+    override suspend fun sevaCharacterDB(characterOfTheDayModel: CharacterOfTheDayModel) {
+        database.getPreferenceDao().saveCharacter(characterOfTheDayModel.toEntity())
     }
 
 }
