@@ -1,6 +1,8 @@
 package org.example.rickyandmorty.ui.home.tabs.episodes
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -13,7 +15,7 @@ class EpisodesViewModel(private val repository: Repository) : ViewModel() {
 
     init {
         _state.update { state ->
-            state.copy(episodes = repository.getAllEpisodes())
+            state.copy(episodes = repository.getAllEpisodes().cachedIn(viewModelScope))
         }
     }
 
