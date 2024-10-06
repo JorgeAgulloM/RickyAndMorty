@@ -7,11 +7,13 @@ import org.example.rickyandmorty.domain.model.CharacterModel
 data class CharacterResponse(
     val id: Int,
     val status: String,
-    val image: String
+    val image: String,
+    val name: String
 ) {
     fun toDomain(): CharacterModel = CharacterModel(
         id = id,
         isAlive = status.lowercase() == "alive",
-        image = image
+        image = image,
+        name = name
     )
 }

@@ -21,6 +21,7 @@ koinComposeViewModel = "1.2.0-Beta4"
 activity = "1.9.2"
 ktor = "2.3.12"
 viewmodel = "2.8.0"
+coil = "3.0.0-alpha08"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -53,6 +54,9 @@ ktor-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlin
 
 # ViewModel
 viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "viewmodel"}
+
+coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil"}
+coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor", version.ref = "coil"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
