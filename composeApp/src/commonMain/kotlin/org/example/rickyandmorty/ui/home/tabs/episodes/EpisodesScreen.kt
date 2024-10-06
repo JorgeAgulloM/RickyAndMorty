@@ -1,7 +1,6 @@
 package org.example.rickyandmorty.ui.home.tabs.episodes
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,15 +11,20 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.cash.paging.compose.collectAsLazyPagingItems
-import coil3.compose.rememberAsyncImagePainter
 import org.example.rickyandmorty.domain.model.EpisodeModel
 import org.example.rickyandmorty.domain.model.SeasonEpisode
-import org.example.rickyandmorty.domain.model.SeasonEpisode.*
+import org.example.rickyandmorty.domain.model.SeasonEpisode.SEASON_1
+import org.example.rickyandmorty.domain.model.SeasonEpisode.SEASON_2
+import org.example.rickyandmorty.domain.model.SeasonEpisode.SEASON_3
+import org.example.rickyandmorty.domain.model.SeasonEpisode.SEASON_4
+import org.example.rickyandmorty.domain.model.SeasonEpisode.SEASON_5
+import org.example.rickyandmorty.domain.model.SeasonEpisode.SEASON_6
+import org.example.rickyandmorty.domain.model.SeasonEpisode.SEASON_7
+import org.example.rickyandmorty.domain.model.SeasonEpisode.UNKNOWN
 import org.example.rickyandmorty.ui.core.components.PagingLoadingState
 import org.example.rickyandmorty.ui.core.components.PagingTypeCustom
 import org.example.rickyandmorty.ui.core.components.PagingWrapper
