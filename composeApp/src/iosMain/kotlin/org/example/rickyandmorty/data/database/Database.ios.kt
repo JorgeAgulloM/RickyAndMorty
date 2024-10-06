@@ -1,10 +1,15 @@
 package org.example.rickyandmorty.data.database
 
+
 import androidx.room.Room
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import platform.Foundation.NSDocumentDirectory
+import platform.Foundation.NSFileManager
+import platform.Foundation.NSURL
+import platform.Foundation.NSUserDomainMask
 
 fun getDatabase(): RickyAndMortyDatabase {
     val dbFile = "${fileDirectory()}/$DATABASE_NAME"
