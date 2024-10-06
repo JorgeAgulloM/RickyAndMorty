@@ -7,9 +7,16 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.kspCompose)
 }
 
 kotlin {
+
+    // Necesario para que se entienda to_do el código generado por ksp
+    sourceSets.commonMain {
+        kotlin.srcDir("build/generated/ksp/metadata")
+    }
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
@@ -73,6 +80,10 @@ kotlin {
 
             // Date
             implementation(libs.kotlinx.datetime)
+
+            // Room
+            implementation(libs.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
         }
         iosMain.dependencies {
             // Ktor
@@ -117,10 +128,22 @@ android {
         debugImplementation(compose.uiTooling)
     }
 }
+
+ksp {
+    arg("room.schemaLocation", "${projectDir}/schemas")
+}
+
 dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    // Needs for Android and IOs platforms
+    add("kspCommonMainMetadata", libs.room.compiler)
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
 }
 
