@@ -1,4 +1,4 @@
-package org.example.rickyandmorty.ui.extensions
+package org.example.rickyandmorty.ui.core.extensions
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
