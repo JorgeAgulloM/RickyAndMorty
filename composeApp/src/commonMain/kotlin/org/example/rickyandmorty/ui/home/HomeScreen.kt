@@ -2,6 +2,7 @@ package org.example.rickyandmorty.ui.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -23,8 +24,8 @@ fun HomeScreen() {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = { BottomNavigation(items, navController) }
-    ) {
-        Box(modifier = Modifier.fillMaxSize()) {
+    ) { paddingValues ->
+        Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
             NavigationBottomWrapper(navController)
         }
     }

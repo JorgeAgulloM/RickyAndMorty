@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -69,13 +70,12 @@ fun CharactersGridList(
             CharacterOfTheDay(characterOfTheDay)
         }
 
-
         when {
             // Loading Api
             characters.loadState.refresh is LoadState.Loading && characters.itemCount == 0 -> {
                 item(span = { GridItemSpan(2) }) {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator(Modifier.size(64.dp), color = Color.Red)
+                    Box(modifier = Modifier.fillMaxHeight().height(100.dp), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(Modifier.size(64.dp), color = Color.Green)
                     }
                 }
             }
@@ -93,9 +93,8 @@ fun CharactersGridList(
                     }
                 }
 
-
                 //Waiting Data
-                if (characters.loadState.refresh is LoadState.Loading) {
+                if (characters.loadState.append is LoadState.Loading) {
                     item(span = { GridItemSpan(2) }) {
                         Box(
                             modifier = Modifier.fillMaxSize(),
@@ -106,9 +105,7 @@ fun CharactersGridList(
                     }
                 }
             }
-
         }
-
     }
 }
 
@@ -155,8 +152,8 @@ fun CharacterItemList(characterModel: CharacterModel) {
 fun CharacterOfTheDay(characterModel: CharacterModel? = null) {
     Card(modifier = Modifier.fillMaxWidth().height(400.dp), shape = RoundedCornerShape(12)) {
         if (characterModel == null) {
-            Box(contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator(color = Color.Green)
             }
         } else {
             Box(contentAlignment = Alignment.BottomStart) {
@@ -183,6 +180,7 @@ fun CharacterOfTheDay(characterModel: CharacterModel? = null) {
                     color = Color.White,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
+                        .fillMaxHeight()
                         .vertical()
                         .rotate(-90f)
                 )
