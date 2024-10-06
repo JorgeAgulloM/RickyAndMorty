@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -67,7 +68,10 @@ fun CharactersGridList(
     ) {
 
         item(span = { GridItemSpan(2) }) {
-            CharacterOfTheDay(characterOfTheDay)
+            Column {
+                Text(text = "Characters", color = Color.Black, fontSize = 24.sp)
+                CharacterOfTheDay(characterOfTheDay)
+            }
         }
 
         when {
