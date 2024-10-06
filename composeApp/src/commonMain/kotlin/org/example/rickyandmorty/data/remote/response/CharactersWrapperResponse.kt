@@ -1,6 +1,9 @@
 package org.example.rickyandmorty.data.remote.response
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CharactersWrapperResponse(
     val info: InfoResponse,
-    val result: List<CharacterResponse>
+    val results: List<CharacterResponse>
 )

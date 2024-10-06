@@ -13,7 +13,7 @@ class CharactersPagingSource(private val api: ApiService) : PagingSource<Int, Ch
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterModel> = try {
         val page = params.key ?: 1
         val response = api.getAllCharacters(page)
-        val characters = response.result
+        val characters = response.results
 
         val prevKey = if (page > 0) -1 else null
         val nextKey = if (response.info.next != null) page + 1 else null
