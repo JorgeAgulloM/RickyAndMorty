@@ -1,17 +1,28 @@
 package org.example.rickyandmorty.ui.home.tabs.episodes
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -35,6 +46,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import rickyandmorty.composeapp.generated.resources.Res
+import rickyandmorty.composeapp.generated.resources.portal
 import rickyandmorty.composeapp.generated.resources.rickface
 import rickyandmorty.composeapp.generated.resources.season1
 import rickyandmorty.composeapp.generated.resources.season2
@@ -64,10 +76,38 @@ fun EpisodesScreen() {
             }
         )
 
-        if (state.playVideo.isNotBlank()) {
-            VideoPlayer(Modifier.size(300.dp), state.playVideo)
-        }
+        EpisodePlayer(state.playVideo) { viewModel.onCloseVideo() }
+    }
+}
 
+@Composable
+private fun EpisodePlayer(
+    playVideo: String,
+    onCloseVideo: () -> Unit
+) {
+    AnimatedVisibility (playVideo.isNotBlank()) {
+        ElevatedCard(
+            modifier = Modifier.fillMaxWidth()
+                .height(250.dp)
+                .padding(16.dp)
+                .border(3.dp, Green, CardDefaults.elevatedShape)
+        ) {
+            Box(modifier = Modifier.background(Black)) {
+                Box(modifier = Modifier.padding(16.dp), contentAlignment = Alignment.Center) {
+                    VideoPlayer(Modifier.fillMaxWidth().height(200.dp), playVideo)
+                }
+                Row {
+                    Spacer(modifier = Modifier.weight(1f))
+                    Image(
+                        painter = painterResource(Res.drawable.portal),
+                        contentDescription = "Close Video",
+                        modifier = Modifier.padding(8.dp).size(40.dp).clickable {
+                            onCloseVideo()
+                        }
+                    )
+                }
+            }
+        }
     }
 }
 
