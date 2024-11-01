@@ -19,7 +19,7 @@ data class EpisodesResponse(
             name = name,
             episode = episode,
             characters = getCharacterFromUrl(),
-            videoUrl = "",
+            videoUrl = getVideoUrlFromSeason(season),
             season = season
         )
     }
@@ -27,14 +27,14 @@ data class EpisodesResponse(
     private fun getCharacterFromUrl() = characters.map { url -> url.substringAfter("/") }
 
     private fun getVideoUrlFromSeason(season: SeasonEpisode): String = when (season) {
-        SEASON_1 -> "https://www.youtube.com/watch?v=BFTSrbB2wII&ab_channel=NathanMcKean"
-        SEASON_2 -> "https://www.youtube.com/watch?v=y23LCrlGQiQ&ab_channel=spideyfan300"
-        SEASON_3 -> "https://www.youtube.com/watch?v=rLyOul8kau0&ab_channel=SeriesTrailerMP"
-        SEASON_4 -> "https://www.youtube.com/watch?v=hl1U0bxTHbY&ab_channel=IGN"
-        SEASON_5 -> "https://www.youtube.com/watch?v=qbHYYXj2gMc&ab_channel=TVPromos"
-        SEASON_6 -> "https://www.youtube.com/watch?v=jerFRSQW9g8&ab_channel=RottenTomatoesTV"
-        SEASON_7 -> "https://www.youtube.com/watch?v=PkZtVBNkmso&ab_channel=RottenTomatoesTV"
-        UNKNOWN -> "https://www.youtube.com/watch?v=PkZtVBNkmso&ab_channel=RottenTomatoesTV"
+        SEASON_1 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-app.firebasestorage.app/o/Rick%20and%20Morty%20Season%201%20-%20Official%20Trailer%20-%20360kb.mp4?alt=media&token=f7110f5b-d6b7-416f-b416-37f28052d156"
+        SEASON_2 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-app.firebasestorage.app/o/Rick%20and%20Morty%20Season%202%20-%20Official%20Trailer%20-%20360kb.mp4?alt=media&token=650aaadf-8d51-4313-9bd8-5f267c3c8cb4"
+        SEASON_3 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-app.firebasestorage.app/o/Rick%20and%20Morty%20Season%203%20-%20Official%20Trailer%20-%20360kb.mp4?alt=media&token=091804e6-153c-4cc1-9440-93e169bcd8b9"
+        SEASON_4 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-app.firebasestorage.app/o/Rick%20and%20Morty%20Season%204%20-%20Official%20Trailer%20-%20360kb.mp4?alt=media&token=05cfba16-e53a-4081-871b-a1bc825a3d5c"
+        SEASON_5 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-app.firebasestorage.app/o/Rick%20and%20Morty%20Season%205%20-%20Official%20Trailer%20-%20360kb.mp4?alt=media&token=c7ee4757-e85e-47c0-99a2-ff85d413899b"
+        SEASON_6 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-app.firebasestorage.app/o/Rick%20and%20Morty%20Season%206%20-%20Official%20Trailer%20-%20360kb.mp4?alt=media&token=55f1747d-4505-403c-b493-13df66c269b4"
+        SEASON_7 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-app.firebasestorage.app/o/Rick%20and%20Morty%20Season%207%20-%20Official%20Trailer%20-%20360kb.mp4?alt=media&token=8ae869fa-ba7a-4ff9-b87b-bf1b6058b38a"
+        UNKNOWN -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-app.firebasestorage.app/o/Rick%20and%20Morty%20Season%207%20-%20Official%20Trailer%20-%20360kb.mp4?alt=media&token=8ae869fa-ba7a-4ff9-b87b-bf1b6058b38a"
     }
 
     private fun getSeasonFromEpisodeCode(episode: String): SeasonEpisode = when {

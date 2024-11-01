@@ -1,12 +1,13 @@
 package org.example.rickyandmorty.ui.home.tabs.episodes
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,6 +29,7 @@ import org.example.rickyandmorty.domain.model.SeasonEpisode.UNKNOWN
 import org.example.rickyandmorty.ui.core.components.PagingLoadingState
 import org.example.rickyandmorty.ui.core.components.PagingTypeCustom
 import org.example.rickyandmorty.ui.core.components.PagingWrapper
+import org.example.rickyandmorty.ui.core.components.VideoPlayer
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -50,19 +52,34 @@ fun EpisodesScreen() {
     val state: EpisodesState by viewModel.state.collectAsStateWithLifecycle()
     val episodes = state.episodes.collectAsLazyPagingItems()
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize()) {
         PagingWrapper(
             pagingTypeCustom = PagingTypeCustom.LazyRow,
             pagingItems = episodes,
             initialView = { PagingLoadingState() },
-            itemView = { EpisodeItemList(it) }
+            itemView = {
+                EpisodeItemList(it) { url ->
+                    viewModel.onPlaySelected(url)
+                }
+            }
         )
+
+        if (state.playVideo.isNotBlank()) {
+            VideoPlayer(Modifier.size(300.dp), state.playVideo)
+        }
+
     }
 }
 
 @Composable
-fun EpisodeItemList(episode: EpisodeModel) {
-    Column(modifier = Modifier.width(120.dp).padding(horizontal = 8.dp)) {
+fun EpisodeItemList(episode: EpisodeModel, onEpisodeSelected: (String) -> Unit) {
+    Column(
+        modifier = Modifier.width(120.dp)
+            .padding(horizontal = 8.dp)
+            .clickable {
+                onEpisodeSelected(episode.videoUrl)
+            }
+    ) {
         Image(
             modifier = Modifier.height(200.dp).fillMaxWidth(),
             contentDescription = episode.name,
@@ -72,8 +89,8 @@ fun EpisodeItemList(episode: EpisodeModel) {
     }
 }
 
-fun getSeasonImage(season: SeasonEpisode) : DrawableResource {
-    return when(season) {
+fun getSeasonImage(season: SeasonEpisode): DrawableResource {
+    return when (season) {
         SEASON_1 -> Res.drawable.season1
         SEASON_2 -> Res.drawable.season2
         SEASON_3 -> Res.drawable.season3
