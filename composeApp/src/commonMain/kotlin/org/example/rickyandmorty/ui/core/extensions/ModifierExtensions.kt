@@ -1,7 +1,11 @@
 package org.example.rickyandmorty.ui.core.extensions
 
+import androidx.compose.foundation.border
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.unit.dp
 
 fun Modifier.vertical() = layout { measurable, constraints ->
     val placeable = measurable.measure(constraints)
@@ -12,3 +16,6 @@ fun Modifier.vertical() = layout { measurable, constraints ->
         )
     }
 }
+
+fun Modifier.aliveBorder(isAlive: Boolean): Modifier =
+    border(4.dp, if (isAlive) Color.Green else Color.Red, CircleShape)

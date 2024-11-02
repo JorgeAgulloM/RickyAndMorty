@@ -8,5 +8,11 @@ import org.example.rickyandmorty.ui.home.tabs.characters.CharacterOfTheDay
 @Preview
 @Composable
 fun Preview() {
-    CharacterOfTheDay(CharacterModel(id = 3, image = "", isAlive = true, name = "Pepe"))
+    CharacterOfTheDay(CharacterModel(
+        id = 3,
+        isAlive = true,
+        image = "",
+        name = "Pepe",
+        species = "Humano"
+    ))
 }

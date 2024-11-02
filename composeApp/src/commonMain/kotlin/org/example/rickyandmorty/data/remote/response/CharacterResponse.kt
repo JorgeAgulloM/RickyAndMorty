@@ -8,12 +8,14 @@ data class CharacterResponse(
     val id: Int,
     val status: String,
     val image: String,
-    val name: String
+    val name: String,
+    val species: String
 ) {
     fun toDomain(): CharacterModel = CharacterModel(
         id = id,
         isAlive = status.lowercase() == "alive",
         image = image,
-        name = name
+        name = name,
+        species = species
     )
 }
