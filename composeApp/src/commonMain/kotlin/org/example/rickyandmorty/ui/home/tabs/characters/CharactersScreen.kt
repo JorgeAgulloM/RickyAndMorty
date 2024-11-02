@@ -3,6 +3,7 @@ package org.example.rickyandmorty.ui.home.tabs.characters
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
@@ -30,10 +35,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.LoadState
 import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
 import org.example.rickyandmorty.domain.model.CharacterModel
+import org.example.rickyandmorty.ui.core.BackgroundPrimaryColor
 import org.example.rickyandmorty.ui.core.DefaultTextColor
 import org.example.rickyandmorty.ui.core.Green
 import org.example.rickyandmorty.ui.core.components.PagingLoadingState
@@ -63,24 +70,60 @@ fun CharactersGridList(
     navigateToDetail: (CharacterModel) -> Unit
 ) {
 
-    PagingWrapper(
-        pagingTypeCustom = PagingTypeCustom.LazyVerticalGrid(1),
-        pagingItems = characters,
-        initialView = { PagingLoadingState() },
-        itemView = { CharacterItemList(it) { characterModel -> navigateToDetail(characterModel) } },
-        extraItemsView = {
+    LazyVerticalGrid(
+        modifier = Modifier.fillMaxSize().background(BackgroundPrimaryColor).padding(horizontal = 16.dp),
+        columns = GridCells.Fixed(2),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+
+        item(span = { GridItemSpan(2) }) {
             Column {
-                Text(
-                    "Characters",
-                    color = DefaultTextColor,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-                Spacer(Modifier.height(6.dp))
+                Text(text = "Characters", color = DefaultTextColor, fontSize = 24.sp, fontWeight = FontWeight.SemiBold)
+                Spacer(modifier = Modifier.height(6.dp))
                 CharacterOfTheDay(characterOfTheDay)
             }
         }
-    )
+
+        when {
+            // Loading Api
+            characters.loadState.refresh is LoadState.Loading && characters.itemCount == 0 -> {
+                item(span = { GridItemSpan(2) }) {
+                    Box(modifier = Modifier.fillMaxHeight().height(100.dp), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(Modifier.size(64.dp), color = Green)
+                    }
+                }
+            }
+
+            // Empty Api
+            characters.loadState.refresh is LoadState.NotLoading && characters.itemCount == 0 -> {
+                item { Text(text = "No hay personajes :(") }
+            }
+
+            else -> {
+                // Review Items
+                items(characters.itemCount) { pos ->
+                    characters[pos]?.let { characterModel ->
+                        CharacterItemList(characterModel) { character ->
+                            navigateToDetail(character)
+                        }
+                    }
+                }
+
+                //Waiting Data
+                if (characters.loadState.append is LoadState.Loading) {
+                    item(span = { GridItemSpan(2) }) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator(Modifier.size(64.dp), color = Green)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 @Composable
