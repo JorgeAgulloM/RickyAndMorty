@@ -13,6 +13,9 @@ fun Preview() {
         isAlive = true,
         image = "",
         name = "Pepe",
-        species = "Humano"
+        species = "Humano",
+        gender = "Masculino",
+        origin = "Tierra",
+        episodes = listOf("1", "2", "3")
     ))
 }

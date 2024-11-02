@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,6 +47,31 @@ fun CharacterDetailScreen(modifier: Modifier = Modifier, characterModel: Charact
 
     Column(modifier = modifier.fillMaxSize().background(color = Color.White)) {
         MainHeader(characterModel = state.characterModel)
+        CharacterInfo(modifier, state.characterModel)
+    }
+}
+
+@Composable
+fun CharacterInfo(modifier: Modifier, characterModel: CharacterModel) {
+    ElevatedCard(modifier = modifier.padding(horizontal = 16.dp).fillMaxWidth()) {
+        Column(
+            modifier = modifier.padding(16.dp),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(text = "ABOUT THE CHARACTER")
+            Spacer(modifier = modifier.height(2.dp))
+            InfoDetail("Origin: ", characterModel.origin)
+            Spacer(modifier = modifier.height(2.dp))
+            InfoDetail("Gender: ", characterModel.gender)
+        }
+    }
+}
+
+@Composable
+fun InfoDetail(title: String, detail: String) {
+    Row {
+        Text(text = title, color = Color.White, fontWeight = FontWeight.Bold)
+        Text(text = detail, color = Color.Green)
     }
 }
 
