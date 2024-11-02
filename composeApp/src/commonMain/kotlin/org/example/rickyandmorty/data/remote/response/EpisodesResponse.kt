@@ -24,7 +24,7 @@ data class EpisodesResponse(
         )
     }
 
-    private fun getCharacterFromUrl() = characters.map { url -> url.substringAfter("/") }
+    private fun getCharacterFromUrl() = characters.map { url -> url.substringAfterLast("/") }
 
     private fun getVideoUrlFromSeason(season: SeasonEpisode): String = when (season) {
         SEASON_1 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-app.firebasestorage.app/o/Rick%20and%20Morty%20Season%201%20-%20Official%20Trailer%20-%20360kb.mp4?alt=media&token=f7110f5b-d6b7-416f-b416-37f28052d156"

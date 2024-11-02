@@ -16,4 +16,5 @@ interface Repository {
 
     // Episodes
     fun getAllEpisodes(): Flow<PagingData<EpisodeModel>>
+    suspend fun getEpisodeForCharacter(episodes: List<String>): List<EpisodeModel>
 }

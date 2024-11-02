@@ -6,7 +6,9 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import org.example.rickyandmorty.data.remote.response.CharacterResponse
 import org.example.rickyandmorty.data.remote.response.CharactersWrapperResponse
+import org.example.rickyandmorty.data.remote.response.EpisodesResponse
 import org.example.rickyandmorty.data.remote.response.EpisodesWrapperResponse
+import org.example.rickyandmorty.domain.model.EpisodeModel
 
 private const val CHARACTER_ENDPOINT = "/api/character/"
 private const val EPISODES_ENDPOINT = "/api/episode/"
@@ -22,5 +24,13 @@ class ApiService(private val client: HttpClient) {
 
     suspend fun getAllEpisodes(page: Int): EpisodesWrapperResponse =
         client.get(EPISODES_ENDPOINT) { parameter(PAGE, page) }.body()
+
+    suspend fun getEpisodes(episodes: String): List<EpisodesResponse> {
+        return client.get("$EPISODES_ENDPOINT/$episodes").body()
+    }
+
+    suspend fun getSingleEpisode(episodeId: String): EpisodesResponse {
+        return client.get("$EPISODES_ENDPOINT/$episodeId").body()
+    }
 
 }

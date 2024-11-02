@@ -48,4 +48,12 @@ class RepositoryImpl(
         pagingSourceFactory = { episodesPagingSource }
     ).flow
 
+    override suspend fun getEpisodeForCharacter(episodes: List<String>): List<EpisodeModel> {
+        return when {
+            episodes.isEmpty() -> emptyList()
+            episodes.size > 1 -> api.getEpisodes(episodes.joinToString(",")).map { it.toDomain() }
+            else -> listOf(api.getSingleEpisode(episodes.first()).toDomain())
+        }
+    }
+
 }
