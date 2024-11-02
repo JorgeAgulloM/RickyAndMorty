@@ -47,18 +47,19 @@ import rickyandmorty.composeapp.generated.resources.rickface
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
-fun CharactersScreen() {
+fun CharactersScreen(navigateToDetail: (CharacterModel) -> Unit) {
     val viewModel = koinViewModel<CharactersViewModel>()
     val state: CharactersState by viewModel.state.collectAsStateWithLifecycle()
     val characters = state.characters.collectAsLazyPagingItems()
 
-    CharactersGridList(characters, state.characterOfTheDay)
+    CharactersGridList(characters, state.characterOfTheDay, navigateToDetail)
 }
 
 @Composable
 fun CharactersGridList(
     characters: LazyPagingItems<CharacterModel>,
-    characterOfTheDay: CharacterModel?
+    characterOfTheDay: CharacterModel?,
+    navigateToDetail: (CharacterModel) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
@@ -93,7 +94,9 @@ fun CharactersGridList(
                 // Review Items
                 items(characters.itemCount) { pos ->
                     characters[pos]?.let { characterModel ->
-                        CharacterItemList(characterModel)
+                        CharacterItemList(characterModel) { character ->
+                            navigateToDetail(character)
+                        }
                     }
                 }
 
@@ -114,7 +117,7 @@ fun CharactersGridList(
 }
 
 @Composable
-fun CharacterItemList(characterModel: CharacterModel) {
+fun CharacterItemList(characterModel: CharacterModel, onItemSelected: (CharacterModel) -> Unit) {
     Box(
         modifier = Modifier.clip(RoundedCornerShape(24))
             .border(
@@ -124,7 +127,7 @@ fun CharacterItemList(characterModel: CharacterModel) {
             ).fillMaxWidth()
             .height(150.dp)
             .clickable {
-
+                onItemSelected(characterModel)
             },
         contentAlignment = Alignment.BottomCenter
     ) {
