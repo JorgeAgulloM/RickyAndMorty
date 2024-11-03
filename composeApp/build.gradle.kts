@@ -1,3 +1,4 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -23,7 +24,9 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
+    jvm("desktop")
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -36,6 +39,8 @@ kotlin {
     }
     
     sourceSets {
+        val desktopMain by getting
+
         task("testClasess")
 
         androidMain.dependencies {
@@ -92,6 +97,12 @@ kotlin {
             // Ktor
             implementation(libs.ktor.client.darwin)
         }
+        desktopMain.dependencies {
+            implementation(compose.desktop.currentOs)
+            implementation(libs.kotlinx.coroutines.swing)
+            implementation(libs.ktor.client.cio)
+        }
+
     }
 }
 
@@ -145,8 +156,20 @@ dependencies {
     // Needs for Android and IOs platforms
     add("kspCommonMainMetadata", libs.room.compiler)
     add("kspAndroid", libs.room.compiler)
+    add("kspDesktop", libs.room.compiler)
     add("kspIosX64", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
+}
+
+compose.desktop {
+    application {
+        mainClass = "org.example.rickyandmorty.MainKt"
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "org.example.rickyandmorty"
+            version = "1.0.0"
+        }
+    }
 }
 
