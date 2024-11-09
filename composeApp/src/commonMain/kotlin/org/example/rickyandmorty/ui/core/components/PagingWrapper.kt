@@ -31,15 +31,12 @@ fun <T : Any> PagingWrapper(
         else -> {
 
             when (pagingTypeCustom) {
-                PagingTypeCustom.LazyRow -> LazyRow {
-                    item {
-                        header()
-                        Spacer(modifier = Modifier.height(16.dp))
-                    }
-                    items(pagingItems.itemCount) { pos ->
-                        pagingItems[pos]?.let { item -> itemView(item) }
-                    }
-                }
+                PagingTypeCustom.LazyRow -> LazyRowTarget(
+                    modifier = Modifier,
+                    pagingItems = pagingItems,
+                    itemView = itemView,
+                    header = header
+                )
 
                 PagingTypeCustom.LazyColumn -> LazyColumn {
                     item {
