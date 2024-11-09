@@ -2,6 +2,7 @@ package org.example.rickyandmorty.ui.detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,6 +38,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import org.example.rickyandmorty.domain.model.CharacterModel
 import org.example.rickyandmorty.domain.model.EpisodeModel
+import org.example.rickyandmorty.isDesktop
 import org.example.rickyandmorty.ui.core.BackgroundPrimaryColor
 import org.example.rickyandmorty.ui.core.BackgroundSecondaryColor
 import org.example.rickyandmorty.ui.core.BackgroundTertiaryColor
@@ -49,11 +52,16 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.parameter.parametersOf
 import rickyandmorty.composeapp.generated.resources.Res
+import rickyandmorty.composeapp.generated.resources.ic_back
 import rickyandmorty.composeapp.generated.resources.space
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
-fun CharacterDetailScreen(modifier: Modifier = Modifier, characterModel: CharacterModel) {
+fun CharacterDetailScreen(
+    modifier: Modifier = Modifier,
+    characterModel: CharacterModel,
+    onBackPressed: () -> Unit
+) {
     val viewModel =
         koinViewModel<CharacterViewModel>(parameters = { parametersOf(characterModel) })
 
@@ -66,7 +74,7 @@ fun CharacterDetailScreen(modifier: Modifier = Modifier, characterModel: Charact
             .background(BackgroundPrimaryColor)
             .verticalScroll(scrollState)
     ) {
-        MainHeader(characterModel = state.characterModel)
+        MainHeader(characterModel = state.characterModel, onBackPressed = onBackPressed)
         Spacer(modifier = modifier.height(16.dp))
         Column(
             modifier = modifier
@@ -99,7 +107,7 @@ fun CharacterEpisodes(modifier: Modifier, episodes: List<EpisodeModel>?) {
                     Spacer(modifier = modifier.height(6.dp))
 
                     episodes.forEach { episode ->
-                        EpisodeItem(modifier, episode)
+                        EpisodeItem(episode)
                         Spacer(modifier = modifier.height(4.dp))
                     }
                 }
@@ -109,7 +117,7 @@ fun CharacterEpisodes(modifier: Modifier, episodes: List<EpisodeModel>?) {
 }
 
 @Composable
-fun EpisodeItem(modifier: Modifier, episode: EpisodeModel) {
+fun EpisodeItem(episode: EpisodeModel) {
     Text(episode.name, color = Green, fontWeight = FontWeight.Bold)
     Text(episode.episode, color = DefaultTextColor)
 }
@@ -142,13 +150,19 @@ fun InfoDetail(title: String, detail: String) {
 }
 
 @Composable
-fun MainHeader(modifier: Modifier = Modifier, characterModel: CharacterModel) {
+fun MainHeader(modifier: Modifier = Modifier, characterModel: CharacterModel, onBackPressed: () -> Unit) {
     Box(modifier = modifier.fillMaxWidth().height(300.dp)) {
         Image(
             painter = painterResource(Res.drawable.space),
             contentDescription = "Background header",
             modifier = modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
+        )
+        if (isDesktop()) Icon(
+            painter = painterResource(Res.drawable.ic_back),
+            contentDescription = "Back button",
+            tint = Color.White,
+            modifier = modifier.padding(16.dp).size(24.dp).clickable { onBackPressed() }
         )
         CharacterHeader(modifier, characterModel = characterModel)
     }

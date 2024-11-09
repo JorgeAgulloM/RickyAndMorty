@@ -25,7 +25,9 @@ fun NavigationWrapper() {
             val characterModel: CharacterModel = Json
                 .decodeFromString<CharacterModel>(characterDetailEncoding.characterModel)
 
-            CharacterDetailScreen(characterModel = characterModel)
+            CharacterDetailScreen(characterModel = characterModel) {
+                mainNavController.popBackStack()
+            }
         }
     }
 }
