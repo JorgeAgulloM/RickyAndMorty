@@ -1,7 +1,6 @@
 package org.example.rickyandmorty.ui.home.tabs.episodes
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -44,8 +43,6 @@ import org.example.rickyandmorty.domain.model.SeasonEpisode.UNKNOWN
 import org.example.rickyandmorty.isDesktop
 import org.example.rickyandmorty.ui.core.BackgroundPlaceholderColor
 import org.example.rickyandmorty.ui.core.BackgroundPrimaryColor
-import org.example.rickyandmorty.ui.core.BackgroundSecondaryColor
-import org.example.rickyandmorty.ui.core.BackgroundTertiaryColor
 import org.example.rickyandmorty.ui.core.DefaultTextColor
 import org.example.rickyandmorty.ui.core.components.PagingLoadingState
 import org.example.rickyandmorty.ui.core.components.PagingTypeCustom

@@ -79,9 +79,9 @@ fun main() = application {
             Text(text = "Restart required.")
         } else {
             if (initialized) {
-                initKoin()
-                App()
-                //UtilsScreen()
+                //initKoin()
+                //App()
+                UtilsScreen()
             } else {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
