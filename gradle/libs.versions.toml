@@ -29,6 +29,7 @@ ksp = "2.0.20-1.0.24" #Primera numeración versión = kotlin
 androidx-sqliteBundled = "2.5.0-alpha07"
 core-splashscreen = "1.0.1"
 kotlinx-coroutines = "1.8.1"
+composeWebViewMultiplatform = "1.9.20"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -83,6 +84,9 @@ androidx-sqlite-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", 
 
 # Splash
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splashscreen"}
+
+# WebView Destop
+compose-webview-multiplatform = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "composeWebViewMultiplatform"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -41,6 +41,7 @@ import org.example.rickyandmorty.domain.model.SeasonEpisode.SEASON_5
 import org.example.rickyandmorty.domain.model.SeasonEpisode.SEASON_6
 import org.example.rickyandmorty.domain.model.SeasonEpisode.SEASON_7
 import org.example.rickyandmorty.domain.model.SeasonEpisode.UNKNOWN
+import org.example.rickyandmorty.isDesktop
 import org.example.rickyandmorty.ui.core.BackgroundPlaceholderColor
 import org.example.rickyandmorty.ui.core.BackgroundPrimaryColor
 import org.example.rickyandmorty.ui.core.BackgroundSecondaryColor
@@ -98,13 +99,14 @@ private fun EpisodePlayer(
 ) {
     AnimatedContent(playVideo.isNotBlank()) { shouldPlay ->
         if (shouldPlay) {
+            val height = if (isDesktop()) 600.dp else 250.dp
             ElevatedCard(
                 modifier = Modifier.fillMaxWidth()
-                    .height(250.dp)
+                    .height(height)
                     .padding(16.dp)
                     .border(3.dp, Green, CardDefaults.elevatedShape)
             ) {
-                Box(modifier = Modifier.background(Black)) {
+                Box(modifier = Modifier.fillMaxSize().background(Black)) {
                     Box(modifier = Modifier.padding(16.dp), contentAlignment = Alignment.Center) {
                         VideoPlayer(Modifier.fillMaxWidth().height(200.dp), playVideo)
                     }

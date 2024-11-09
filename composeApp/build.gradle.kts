@@ -101,6 +101,7 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.ktor.client.cio)
+            api(libs.compose.webview.multiplatform)
         }
 
     }
@@ -169,6 +170,22 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "org.example.rickyandmorty"
             version = "1.0.0"
+        }
+
+        afterEvaluate {
+            tasks.withType<JavaExec> {
+                jvmArgs("--add-opens", "java.desktop/sun.awt=ALL-UNNAMED")
+                jvmArgs(
+                    "--add-opens",
+                    "java.desktop/java.awt.peer=ALL-UNNAMED"
+                )
+
+                if (System.getProperty("os.name").contains("Mac")) {
+                    jvmArgs("--add-opens", "java.desktop/sun.awt=ALL-UNNAMED")
+                    jvmArgs("--add-opens", "java.desktop/sun.lwawt=ALL-UNNAMED")
+                    jvmArgs("--add-opens", "java.desktop/sun.lwawt.macosx=ALL-UNNAMED")
+                }
+            }
         }
     }
 }
