@@ -39,6 +39,8 @@ fun main() = application {
         var restartRequired by remember { mutableStateOf(false) }
         var downloading by remember { mutableStateOf(0F) }
         var initialized by remember { mutableStateOf(false) }
+
+        // Tray state -> show icon on state bar desktop with configured actions
         val trayState = rememberTrayState()
         if (isTraySupported) {
             Tray(state = trayState,
@@ -79,9 +81,9 @@ fun main() = application {
             Text(text = "Restart required.")
         } else {
             if (initialized) {
-                //initKoin()
-                //App()
-                UtilsScreen()
+                initKoin()
+                App()
+                //UtilsScreen()
             } else {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
